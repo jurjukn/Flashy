@@ -26,7 +26,7 @@ export default class FlashyCards extends React.Component {
   }
   
   openDeck = deckName => {
-    console.log('clicked: ' + deckName)
+    console.log('clickedD: ' + deckName)
     console.log(this.state.decks.filter(deck => deck.name===deckName))
     this.setState({
       deckToShow: deckName,
