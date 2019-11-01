@@ -5,13 +5,7 @@ import Constants from 'expo-constants';
 
 import decks from './flashcards'
 import DecksList from './DecksList'
-import Card from './Card'
-
-const Row = props =>(
-  <View>
-      <Text>{props.name}</Text>
-  </View>
-)
+import CardsView from './CardsView'
 
 export default class FlashyCards extends React.Component {
 
@@ -19,34 +13,46 @@ export default class FlashyCards extends React.Component {
 	// there is a standard constructor here:
 	// https://github.com/rrobbes/EngineeringOfMobileSystems/blob/master/lec4-ReactNative/todo-rn.js
   
-  state = {
-    	decks: decks,
-      showDecks: false,
-      deckToShow: 'none'
+  constructor(props) {
+    super(props)
+    this.state = {
+      decks: decks,
+      currentGameCardsList: [],
+      gameStarted: false,
+    }
   }
   
-  openDeck = deckName => {
-    console.log('clickedD: ' + deckName)
-    console.log(this.state.decks.filter(deck => deck.name===deckName))
+  startMainMenu = () => {
     this.setState({
-      deckToShow: deckName,
-      showDecks: true
+      currentGameCardsList: [],
+      gameStarted: false
+    })
+  }
+
+  restartDeck = () => {
+    console.log("restarting deck")
+  }
+
+  openDeck = (selectedDeck) => {
+    this.setState({
+      currentGameCardsList: selectedDeck,
+      gameStarted: true
     })
   }
 
 	render() {
-    
 		return (
-		
       <View style={styles.container}>
         <Text>HELLO FLASHY CAARDS</Text>
-        <DecksList decks={this.state.decks} action={this.openDeck}/>
-        {this.state.showDecks === true &&
-          <Text> Value of deckToShow: {this.state.deckToShow} </Text>
-        }
+        <Text> Value of deckToShow: {this.state.currentGameCardsList.name} </Text>
+        
+        {this.state.gameStarted === false? (
+          <DecksList decks={this.state.decks} action={this.openDeck}/>
+        ) : (
+          <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} restartDeckAction={this.restartDeck} />
+        )}
 
       </View>
-
 		);
 	}
 }
