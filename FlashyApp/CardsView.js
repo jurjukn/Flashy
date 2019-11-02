@@ -13,7 +13,6 @@ class CardsView extends Component {
             incorrectCardsDeck: [],
             firstDeckCard: this.props.currentDeck.cards[0]
         };
-        console.log(this.state.deck.cards)
     }
 
     reshuffleDeck = () => {

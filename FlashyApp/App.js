@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import decks from './flashcards'
 import DecksList from './DecksList'
 import CardsView from './CardsView'
+import EditDeck from './EditDeck'
 
 export default class FlashyCards extends React.Component {
 
@@ -36,6 +37,12 @@ export default class FlashyCards extends React.Component {
     })
   }
 
+  renameDeck = (newName) => {
+    const currDeck = this.state.currentGameCardsList
+    currDeck.name = newName
+    this.setState({currentGameCardsList: currDeck})
+  }
+
 	render() {
 		return (
       <View style={styles.container}>
@@ -43,9 +50,12 @@ export default class FlashyCards extends React.Component {
         <Text> Value of deckToShow: {this.state.currentGameCardsList.name} </Text>
         
         {this.state.gameStarted === false? (
-          <DecksList decks={this.state.decks} action={this.openDeck}/>
+          <DecksList decks={this.state.decks} action={this.openDeck} />
         ) : (
-          <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} />
+          <View>
+            <EditDeck  renameDeckAction={this.renameDeck} oldDeckName={this.state.currentGameCardsList.name} />
+            <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} />
+          </View>
         )}
 
       </View>
