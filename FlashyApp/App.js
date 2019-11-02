@@ -29,10 +29,6 @@ export default class FlashyCards extends React.Component {
     })
   }
 
-  restartDeck = () => {
-    console.log("restarting deck")
-  }
-
   openDeck = (selectedDeck) => {
     this.setState({
       currentGameCardsList: selectedDeck,
@@ -49,7 +45,7 @@ export default class FlashyCards extends React.Component {
         {this.state.gameStarted === false? (
           <DecksList decks={this.state.decks} action={this.openDeck}/>
         ) : (
-          <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} restartDeckAction={this.restartDeck} />
+          <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} />
         )}
 
       </View>
