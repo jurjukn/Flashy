@@ -7,6 +7,7 @@ import decks from './flashcards'
 import DecksList from './DecksList'
 import CardsView from './CardsView'
 import EditDeck from './EditDeck'
+import AddNewCardForm from './AddNewCardForm'
 
 export default class FlashyCards extends React.Component {
 
@@ -55,6 +56,7 @@ export default class FlashyCards extends React.Component {
           <View>
             <EditDeck  renameDeckAction={this.renameDeck} oldDeckName={this.state.currentGameCardsList.name} />
             <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} />
+            <AddNewCardForm currentDeck={this.state.currentGameCardsList} />
           </View>
         )}
 

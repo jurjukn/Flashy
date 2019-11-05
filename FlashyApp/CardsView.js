@@ -23,13 +23,13 @@ class CardsView extends Component {
     }
 
     removeCardFromDeck = () => {
-        newDeck = this.state.deck
+        const newDeck = this.state.deck
         newDeck.cards.shift()        
         return newDeck
     }
 
     assignDeckCard = (card) => {
-        firstCard = card
+        const firstCard = card
         return firstCard
     }
 
