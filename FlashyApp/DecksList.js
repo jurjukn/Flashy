@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
+import AddNewDeckForm from './AddNewDeckForm'
+
 
 // styles for the components in this file
 const styles = StyleSheet.create({
@@ -23,17 +25,18 @@ const Row = rowProps =>(
 const DecksList = props => {
     
     return (
-        
         <ScrollView>
             {props.decks.map(deck =>
                 <Row    
                     key={deck.name}
                     selectedDeck={deck} 
                     name={deck.name} 
-                    action={props.action} 
+                    action={props.openDeckAction} 
                     renameDeckActionn={props.renameDeckAction} 
                 />
             )}
+            <Text>Add new deck</Text>
+            <AddNewDeckForm addNewDeckAction={props.addNewDeckAction} />
         </ScrollView>
             
     )

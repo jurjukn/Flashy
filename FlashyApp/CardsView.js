@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
+import AddNewCardForm from './AddNewCardForm'
+
 class CardsView extends Component {
 
     constructor(props) {
@@ -11,7 +13,8 @@ class CardsView extends Component {
             stopAction: this.props.changeDeckAction,
             correctCardsDeck: [],
             incorrectCardsDeck: [],
-            firstDeckCard: this.props.currentDeck.cards[0]
+            firstDeckCard: this.props.currentDeck.cards[0],
+            deleteDeckAction: props.deleteDeckAction
         };
     }
 
@@ -99,8 +102,9 @@ class CardsView extends Component {
                         </View>                
                     )}
                 </View>
+                <AddNewCardForm currentDeck={this.state.deck} />
+                <Button title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
                 <Button title="Choose another topic" onPress={() => this.state.stopAction()} />
-                {/* {console.log(this.state.correctCardsDeck)} */}
             </View>
         )
     }
@@ -113,7 +117,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: "60%",
         width:  350,
-        marginBottom: "10%"
     },
 });
 

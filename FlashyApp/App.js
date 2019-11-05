@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 
 
@@ -7,13 +7,8 @@ import decks from './flashcards'
 import DecksList from './DecksList'
 import CardsView from './CardsView'
 import EditDeck from './EditDeck'
-import AddNewCardForm from './AddNewCardForm'
 
 export default class FlashyCards extends React.Component {
-
-	// this is a shorthand way of writing a constructor when we only have state
-	// there is a standard constructor here:
-	// https://github.com/rrobbes/EngineeringOfMobileSystems/blob/master/lec4-ReactNative/todo-rn.js
   
   constructor(props) {
     super(props)
@@ -44,6 +39,19 @@ export default class FlashyCards extends React.Component {
     this.setState({currentGameCardsList: currDeck})
   }
 
+  addNewDeck = (newDeck) => {
+    const newDecks = this.state.decks
+    newDecks.push(newDeck)
+    this.setState({decks: newDecks})
+  }
+
+  deleteDeck = (deckToDelete) => {
+    console.log("I will delete your deck")
+    const newDecks = this.state.decks.filter((deck) => deck !== deckToDelete)
+    this.setState({decks: newDecks})
+    this.startMainMenu()
+  }
+
 	render() {
 		return (
       <View style={styles.container}>
@@ -51,12 +59,11 @@ export default class FlashyCards extends React.Component {
         <Text> Value of deckToShow: {this.state.currentGameCardsList.name} </Text>
         
         {this.state.gameStarted === false? (
-          <DecksList decks={this.state.decks} action={this.openDeck} />
+            <DecksList decks={this.state.decks} openDeckAction={this.openDeck} addNewDeckAction={this.addNewDeck} />
         ) : (
           <View>
             <EditDeck  renameDeckAction={this.renameDeck} oldDeckName={this.state.currentGameCardsList.name} />
-            <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} />
-            <AddNewCardForm currentDeck={this.state.currentGameCardsList} />
+            <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} deleteDeckAction={this.deleteDeck} />
           </View>
         )}
 
