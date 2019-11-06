@@ -17,7 +17,7 @@ class AddNewCardForm extends Component {
             backIsValid: false,
             cardFront: '',
             cardBack: '',
-            deck: props.currentDeck
+            deck: props.currentDeck,
         };
     }
 
@@ -45,8 +45,9 @@ class AddNewCardForm extends Component {
         newCard = {front: this.state.cardFront, back: this.state.cardBack}
         newDeck = this.state.deck
         newDeck.cards.push(newCard)
-        this.setState({deck: newDeck})
-        console.log(this.state.deck)
+        this.setState({
+            deck: newDeck,
+        })
     }
 
     render(){

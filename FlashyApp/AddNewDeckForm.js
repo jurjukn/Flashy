@@ -27,6 +27,7 @@ class AddNewDeckForm extends Component {
         console.log("save new deck")
         const newDeck = {cards: [], name: this.state.deckName}
         this.state.addNewDeckAction(newDeck)
+        this.setState({deckName: ''})
     }
 
     render(){
@@ -36,6 +37,7 @@ class AddNewDeckForm extends Component {
                     style={styles.input}
                     placeholder="enter deck name"
                     onChangeText={this.checkDeckName}
+                    value={this.state.deckName}
                 />
                 <Button 
                     title="Add deck" 

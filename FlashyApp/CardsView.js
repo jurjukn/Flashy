@@ -14,7 +14,8 @@ class CardsView extends Component {
             correctCardsDeck: [],
             incorrectCardsDeck: [],
             firstDeckCard: this.props.currentDeck.cards[0],
-            deleteDeckAction: props.deleteDeckAction
+            deleteDeckAction: props.deleteDeckAction,
+            deleteCardAction: props.deleteCardAction
         };
     }
 
@@ -37,7 +38,6 @@ class CardsView extends Component {
     }
 
     restartDeck = () => {
-        console.log("Deck restart in CardsView")
         newDeck = this.state.deck
         newDeck.cards = (this.state.incorrectCardsDeck.concat(this.state.deck.cards)).concat(this.state.correctCardsDeck)
         this.setState({
@@ -46,7 +46,11 @@ class CardsView extends Component {
             correctCardsDeck: [],
             firstDeckCard: this.state.deck.cards[0]
         })
-        console.log(this.state.deck.cards)
+    }
+
+    deleteCard = () => {
+        const newDeck = this.state.deleteCardAction(this.state.firstDeckCard)
+        this.setState({deck: newDeck, firstDeckCard: newDeck.cards[0]})
     }
 
     render(){
@@ -72,7 +76,13 @@ class CardsView extends Component {
                     {this.state.showFront===true ? (
 
                         this.state.firstDeckCard !== undefined ? (
-                            <Button title="Flip" onPress={() => this.setState({showFront: false} ) }/>
+                            <View>
+                                <Button title="Flip" onPress={() => this.setState({showFront: false} ) }/>
+                                <Button 
+                                    title="Delete card" 
+                                    onPress={() => this.deleteCard()}
+                                />
+                            </View>
                         ) : (
                             <Button title="Reshuffle" onPress={() => this.setState({
                                 deck: this.reshuffleDeck(), 

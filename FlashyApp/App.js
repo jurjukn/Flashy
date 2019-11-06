@@ -8,6 +8,8 @@ import DecksList from './DecksList'
 import CardsView from './CardsView'
 import EditDeck from './EditDeck'
 
+//Testing git
+
 export default class FlashyCards extends React.Component {
   
   constructor(props) {
@@ -46,10 +48,22 @@ export default class FlashyCards extends React.Component {
   }
 
   deleteDeck = (deckToDelete) => {
-    console.log("I will delete your deck")
     const newDecks = this.state.decks.filter((deck) => deck !== deckToDelete)
     this.setState({decks: newDecks})
     this.startMainMenu()
+  }
+
+  deleteCard = (cardToDelete) => {
+      // console.log("I will delete this card")
+      // console.log(cardToDelete)
+      // console.log(this.state.currentGameCardsList)
+      const newCardsList = this.state.currentGameCardsList.cards.filter((card) => card !== cardToDelete)
+      const newDeck = this.state.currentGameCardsList
+      newDeck.cards = []
+      newDeck.cards = newCardsList
+      this.setState({currentGameCardsList: newDeck})
+      // console.log(this.state.currentGameCardsList)
+      return this.state.currentGameCardsList
   }
 
 	render() {
@@ -63,7 +77,12 @@ export default class FlashyCards extends React.Component {
         ) : (
           <View>
             <EditDeck  renameDeckAction={this.renameDeck} oldDeckName={this.state.currentGameCardsList.name} />
-            <CardsView currentDeck={this.state.currentGameCardsList} changeDeckAction={this.startMainMenu} deleteDeckAction={this.deleteDeck} />
+            <CardsView 
+              currentDeck={this.state.currentGameCardsList}
+              changeDeckAction={this.startMainMenu} 
+              deleteDeckAction={this.deleteDeck} 
+              deleteCardAction={this.deleteCard}
+            />
           </View>
         )}
 
