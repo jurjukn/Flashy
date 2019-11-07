@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
-import AddNewCardForm from './AddNewCardForm'
 
 class CardsView extends Component {
 
@@ -15,7 +14,8 @@ class CardsView extends Component {
             incorrectCardsDeck: [],
             firstDeckCard: this.props.currentDeck.cards[0],
             deleteDeckAction: props.deleteDeckAction,
-            deleteCardAction: props.deleteCardAction
+            deleteCardAction: props.deleteCardAction,
+            editDeckAction: props.editDeckAction
         };
     }
 
@@ -56,9 +56,9 @@ class CardsView extends Component {
     render(){
         return (
             <View>
+                <Button style={styles.editDeckBtn} title="Edit deck" onPress={()=>this.state.editDeckAction(true)}/>
                 <Button title="Restart deck" onPress={()=>this.restartDeck()}/>
                 <View style={styles.cardView}>
-                    
                     { this.state.firstDeckCard !== undefined ? (
                         <Text>
                             {this.state.showFront===true ?( 
@@ -112,8 +112,6 @@ class CardsView extends Component {
                         </View>                
                     )}
                 </View>
-                <AddNewCardForm currentDeck={this.state.deck} />
-                <Button title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
                 <Button title="Choose another topic" onPress={() => this.state.stopAction()} />
             </View>
         )
@@ -128,6 +126,9 @@ const styles = StyleSheet.create({
         height: "60%",
         width:  350,
     },
+    editDeckBtn: {
+
+    }
 });
 
 export default CardsView
