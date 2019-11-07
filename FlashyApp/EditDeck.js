@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
+import AddNewCardForm from './AddNewCardForm'
+
 
 class EditDeck extends Component {
 
@@ -10,7 +12,10 @@ class EditDeck extends Component {
             renameDeckAction: this.props.renameDeckAction,
             oldDeckName: this.props.oldDeckName,
             newDeckName: '',
-            isValid: false
+            isValid: false,
+            deleteDeckAction: props.deleteDeckAction,
+            deck: this.props.currentDeck,
+            editDeckAction: props.editDeckAction
         };
     }
 
@@ -31,6 +36,7 @@ class EditDeck extends Component {
     render(){
         return (
             <View>
+                <Button title="Back" onPress={() => this.state.editDeckAction(false)} />
                 <TextInput 
                     style={styles.input}
                     placeholder="enter new deck name"
@@ -41,6 +47,8 @@ class EditDeck extends Component {
                     onPress={this.submitNewName}
                     disabled={!this.state.isValid}
                 />
+                <AddNewCardForm currentDeck={this.state.deck} />
+                <Button title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
             </View>
         )
     }    

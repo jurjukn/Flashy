@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
 import AddNewDeckForm from './AddNewDeckForm'
 
-
-// styles for the components in this file
 const styles = StyleSheet.create({
     contact: {marginLeft: 55, margin: 10},
     header: {
@@ -17,29 +15,51 @@ const styles = StyleSheet.create({
 
 const Row = rowProps =>(
     <View>
-        <Text> {rowProps.name} </Text> 
         <Button title={rowProps.name} onPress={() => rowProps.action(rowProps.selectedDeck)} />
     </View>
 )
 
-const DecksList = props => {
-    
-    return (
-        <ScrollView>
-            {props.decks.map(deck =>
-                <Row    
-                    key={deck.name}
-                    selectedDeck={deck} 
-                    name={deck.name} 
-                    action={props.openDeckAction} 
-                    renameDeckActionn={props.renameDeckAction} 
-                />
-            )}
-            <Text>Add new deck</Text>
-            <AddNewDeckForm addNewDeckAction={props.addNewDeckAction} />
-        </ScrollView>
-            
-    )
+class DecksList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { 
+            decks: props.decks,
+            openDeckAction: props.openDeckAction,
+            addNewDeckAction: props.addNewDeckAction,
+            showAddNewDeckForm: false
+        };
+    }
+    finishedAddingAction = () => {
+        this.setState({showAddNewDeckForm: false})
+    }
+    render(){
+        return (
+            <ScrollView>
+                { this.state.showAddNewDeckForm === false ? (
+                <View>
+                    {this.state.decks.map(deck =>
+                        <Row    
+                            key={deck.name}
+                            selectedDeck={deck} 
+                            name={deck.name} 
+                            action={this.state.openDeckAction} 
+                            renameDeckActionn={this.state.renameDeckAction} 
+                        />
+                    )}
+                    <Button title="Add Deck" onPress={()=> this.setState({showAddNewDeckForm: true})}/>
+                </View>
+                ) : (
+                <View>
+                    <Text>Add new deck</Text>
+                    <AddNewDeckForm addNewDeckAction={this.state.addNewDeckAction} finishedAddingAction={this.finishedAddingAction}/>
+                </View>
+                )}
+
+            </ScrollView>
+        )
+    }
 }
+
 
 export default DecksList

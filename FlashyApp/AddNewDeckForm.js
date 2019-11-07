@@ -9,7 +9,8 @@ class AddNewDeckForm extends Component {
         this.state = { 
             addNewDeckAction: this.props.addNewDeckAction,
             deckName: '',
-            isValid: false
+            isValid: false,
+            finishedAddingAction: props.finishedAddingAction
         };
     }
 
@@ -24,15 +25,19 @@ class AddNewDeckForm extends Component {
     }
 
     submitNewDeck = () => {
-        console.log("save new deck")
         const newDeck = {cards: [], name: this.state.deckName}
         this.state.addNewDeckAction(newDeck)
         this.setState({deckName: ''})
+        this.state.finishedAddingAction()
     }
 
     render(){
         return (
             <View>
+                <Button 
+                    title="Back" 
+                    onPress={()=>this.state.finishedAddingAction()}
+                />
                 <TextInput 
                     style={styles.input}
                     placeholder="enter deck name"
