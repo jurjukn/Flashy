@@ -43,7 +43,6 @@ export default class FlashyCards extends React.Component {
   }
 
   addNewDeck = (newDeck) => {
-    console.log("Adding new deck")
     const newDecks = this.state.decks
     newDecks.push(newDeck)
     this.setState({decks: newDecks})
@@ -65,7 +64,6 @@ export default class FlashyCards extends React.Component {
   }
 
   toggleEditDeck = (editMode) => {
-    console.log("let me edit deck")
     const editDeck = editMode;
     this.setState({editDeck: editDeck})
   }
@@ -86,7 +84,6 @@ export default class FlashyCards extends React.Component {
                 renameDeckAction={this.renameDeck} 
                 deleteDeckAction={this.deleteDeck}
                 editDeckAction={this.toggleEditDeck}
-                // addNewDeckAction={this.addNewDeck}
               />
             </View>
             ) : (

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, ScrollView, Button } from 'react-native';
 
 import AddNewDeckForm from './AddNewDeckForm'
 

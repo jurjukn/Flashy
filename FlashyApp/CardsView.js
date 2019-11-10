@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 import AppTitleView from './AppTitleView'
 
@@ -92,16 +92,24 @@ class CardsView extends Component {
     }
 
     restartDeck = () => {
-        newDeck = this.state.deck
-        newDeck.cards = (this.state.incorrectCardsDeck.concat(this.state.deck.cards)).concat(this.state.correctCardsDeck)
+        const newDeck = this.state.deck
+
+        const sortedByTimeCorrectCardsDeck = this.state.correctCardsDeck.sort(this.compareValues('secondsTaken'))
+        sortedByTimeCorrectCardsDeck.map((objectt) => delete objectt['secondsTaken'])
+
+        const sortedByTimeIncorrectCardsDeck = this.state.incorrectCardsDeck.sort(this.compareValues('secondsTaken'))
+        sortedByTimeIncorrectCardsDeck.map((objectt) => delete objectt['secondsTaken'])
+
+        newDeck.cards = (sortedByTimeIncorrectCardsDeck.concat(this.state.deck.cards)).concat(sortedByTimeCorrectCardsDeck)
         this.setState({
-            deck: newDeck,
+            deck: newDeck, 
+            firstDeckCard: this.assignDeckCard(this.state.deck.cards[0]),
             incorrectCardsDeck: [],
             correctCardsDeck: [],
-            firstDeckCard: this.state.deck.cards[0],
             minutesCounter: '00',
             secondsCounter: '00',
         })
+        clearInterval(this.state.timer)
     }
 
     deleteCard = () => {
@@ -150,13 +158,12 @@ class CardsView extends Component {
     }
     render(){
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1, width:"100%"}}>
                 <View style={{flex:1}}>
                     <AppTitleView title={this.state.deck.name} />
                     <Button color="#87CEFA" title="Back to main menu" onPress={() => this.state.stopAction()} />
                 </View>
-
-                <Button title="Restart deck" onPress={()=>this.restartDeck()}/>
+                <Button color="#4682B4" title="Delete card" onPress={() => this.deleteCard()}/>
                 <View style={styles.cardView}>
                     {this.state.firstDeckCard !== undefined ? (
                         this.state.showFront===true ? (   
@@ -164,12 +171,9 @@ class CardsView extends Component {
                                 <View style={{flex:3, paddingTop:25, alignItems:'center', justifyContent:'center'}}>
                                     <Text style={styles.cardTextStyle}>{this.state.firstDeckCard.front}</Text>
                                 </View>
-                                <View style={{flex:2, alignItems:'center', justifyContent:'center'}}>
+                                <View style={{flex:3, alignItems:'center', justifyContent:'center'}}>
                                     <Text style={styles.timerTextStyle}>{this.state.minutesCounter} : {this.state.secondsCounter}</Text>
                                     <Button color="#6495ED" title="Flip" onPress={() => this.onFlipCard() }/>
-                                </View>
-                                <View style={{flex:1, alignItems:'stretch'}}>
-                                    <Button color="#4169E1" title="Delete card" onPress={() => this.deleteCard()}/>
                                 </View>
                             </View>
                         ) : (
@@ -192,7 +196,8 @@ class CardsView extends Component {
                         </View> 
                     )}
                 </View>
-                <View style={{flex:1}}>
+                <Button title="Restart deck" onPress={()=>this.restartDeck()}/>
+                <View style={{flex:1, paddingTop: 30}}>
                     <Button color="#483D8B" style={styles.editDeckBtn} title="Edit deck" onPress={()=>this.state.editDeckAction(true)}/>
                 </View>
             </View>
@@ -202,7 +207,7 @@ class CardsView extends Component {
 
 const styles = StyleSheet.create({
     cardView: {
-        flex:4,
+        flex:2,
         backgroundColor: "#E6E6FA",
         alignItems: 'center',
         justifyContent: 'center',
