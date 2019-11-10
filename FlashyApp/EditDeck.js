@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
-import Constants from 'expo-constants'
 
 import AddNewCardForm from './AddNewCardForm'
 import AppTitleView from './AppTitleView'
@@ -29,6 +28,11 @@ class EditDeck extends Component {
         this.setState({showRenameDeckForm: toggleOption})
     }
 
+    deleteDeck = () => {
+        this.state.deleteDeckAction(this.state.deck)
+        this.state.editDeckAction(false)
+    }
+
     render(){
         return (
             <View style={{flex:1}}>
@@ -50,7 +54,7 @@ class EditDeck extends Component {
                                 <View style={{flex:1, justifyContent:'space-evenly'}}>
                                     <Button title="Add card to deck" onPress={() => this.toggleAddingNewCardForm(true)} />
                                     <Button title="Rename deck" onPress={() => this.toggleDeckRenameForm(true)} />
-                                    <Button color="#000080" title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
+                                    <Button color="#000080" title="Delete deck" onPress={() => this.deleteDeck()} />
                                 </View>
                             </View>
                         )
