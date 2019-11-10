@@ -1,20 +1,17 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, ScrollView, Button } from 'react-native';
 
 import AddNewDeckForm from './AddNewDeckForm'
 
 const styles = StyleSheet.create({
-    contact: {marginLeft: 55, margin: 10},
-    header: {
-        fontSize: 24, 
-        fontWeight: 'bold',
-        paddingTop: 30,
-        margin: 25
+    deckBtnView: {
+        padding: 10,
+        
     }
 })
 
 const Row = rowProps =>(
-    <View>
+    <View style={styles.deckBtnView}>
         <Button title={rowProps.name} onPress={() => rowProps.action(rowProps.selectedDeck)} />
     </View>
 )
@@ -35,9 +32,10 @@ class DecksList extends Component {
     }
     render(){
         return (
-            <ScrollView>
+            <View style={{flex:1}}>
                 { this.state.showAddNewDeckForm === false ? (
-                <View>
+                <ScrollView>
+                <View style={{flex:1}}>
                     {this.state.decks.map(deck =>
                         <Row    
                             key={deck.name}
@@ -47,16 +45,16 @@ class DecksList extends Component {
                             renameDeckActionn={this.state.renameDeckAction} 
                         />
                     )}
-                    <Button title="Add Deck" onPress={()=> this.setState({showAddNewDeckForm: true})}/>
+                    <Button color="#483D8B" style={styles.deckBtnView} title="Add New Deck" onPress={()=> this.setState({showAddNewDeckForm: true})}/>
                 </View>
+                </ScrollView>
                 ) : (
-                <View>
-                    <Text>Add new deck</Text>
+                <View style={{flex:1}}>
                     <AddNewDeckForm addNewDeckAction={this.state.addNewDeckAction} finishedAddingAction={this.finishedAddingAction}/>
                 </View>
                 )}
-
-            </ScrollView>
+            </View>
+            
         )
     }
 }
