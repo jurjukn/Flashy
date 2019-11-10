@@ -52,7 +52,7 @@ class EditDeck extends Component {
                                     <Button color="#87CEFA" title="Back to playing" onPress={() => this.state.editDeckAction(false)} />
                                 </View>
                                 <View style={{flex:1, justifyContent:'space-evenly'}}>
-                                    <Button title="Add card to deck" onPress={() => this.toggleAddingNewCardForm(true)} />
+                                    <Button title="Add card" onPress={() => this.toggleAddingNewCardForm(true)} />
                                     <Button title="Rename deck" onPress={() => this.toggleDeckRenameForm(true)} />
                                     <Button color="#000080" title="Delete deck" onPress={() => this.deleteDeck()} />
                                 </View>
