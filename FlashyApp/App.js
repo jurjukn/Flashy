@@ -7,6 +7,7 @@ import decks from './flashcards'
 import DecksList from './DecksList'
 import CardsView from './CardsView'
 import EditDeck from './EditDeck'
+import AppTitleView from './AppTitleView'
 
 
 export default class FlashyCards extends React.Component {
@@ -72,25 +73,21 @@ export default class FlashyCards extends React.Component {
 	render() {
 		return (
       <View style={styles.mainContainer}>
-        
         {this.state.gameStarted === false? (
-            <View style={styles.appTitleContainer}>
-              <Text style={styles.appTitle} number="1">Flashy Cards.</Text>
+            <View style={styles.appLandingViewContainer}>
+              <AppTitleView title='Flashy Cards.' />
               <DecksList decks={this.state.decks} openDeckAction={this.openDeck} addNewDeckAction={this.addNewDeck} />
             </View>
         ) : (
-
           this.state.editDeck === true ? (
             <View style={styles.contentContainer}>
               <EditDeck
                 currentDeck={this.state.currentGameCardsList}  
                 renameDeckAction={this.renameDeck} 
-                oldDeckName={this.state.currentGameCardsList.name}
                 deleteDeckAction={this.deleteDeck}
                 editDeckAction={this.toggleEditDeck}
-                addNewDeckAction={this.addNewDeck}
+                // addNewDeckAction={this.addNewDeck}
               />
-
             </View>
             ) : (
             <View style={styles.contentContainer}>
@@ -113,29 +110,17 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: "#B0E0E6",
-    // alignItems: 'center',
-    // justifyContent: 'center',
     paddingTop: Constants.statusBarHeight
   },
-  appTitleContainer: {
+  appLandingViewContainer: {
     flex: 1,
     backgroundColor: "#F0F8FF",
     padding: 5
-  },
-  appTitle: {
-    fontSize: 35,
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    letterSpacing: 1,
-    textShadowOffset: { width: 4, height: 4 },
-    textShadowRadius: 5,
-    textShadowColor: "#1E90FF"
   },
   contentContainer: {
     flex: 5,
     backgroundColor: "#F0F8FF",
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 5
   }
 });

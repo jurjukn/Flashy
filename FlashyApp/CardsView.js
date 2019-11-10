@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
+import AppTitleView from './AppTitleView'
+
 
 class CardsView extends Component {
 
@@ -148,24 +150,37 @@ class CardsView extends Component {
     }
     render(){
         return (
-            <View>
-                <Button style={styles.editDeckBtn} title="Edit deck" onPress={()=>this.state.editDeckAction(true)}/>
+            <View style={{flex:1}}>
+                <View style={{flex:1}}>
+                    <AppTitleView title={this.state.deck.name} />
+                    <Button color="#87CEFA" title="Back to main menu" onPress={() => this.state.stopAction()} />
+                </View>
+
                 <Button title="Restart deck" onPress={()=>this.restartDeck()}/>
                 <View style={styles.cardView}>
                     {this.state.firstDeckCard !== undefined ? (
                         this.state.showFront===true ? (   
-                            <View>
-                                <Text>{this.state.firstDeckCard.front}</Text>
-                                <Text>{this.state.minutesCounter} : {this.state.secondsCounter}</Text>
-                                <Button title="Flip" onPress={() => this.onFlipCard() }/>
-                                <Button title="Delete card" onPress={() => this.deleteCard()}
-                                />
+                            <View style={{flex:1}}>
+                                <View style={{flex:3, paddingTop:25, alignItems:'center', justifyContent:'center'}}>
+                                    <Text style={styles.cardTextStyle}>{this.state.firstDeckCard.front}</Text>
+                                </View>
+                                <View style={{flex:2, alignItems:'center', justifyContent:'center'}}>
+                                    <Text style={styles.timerTextStyle}>{this.state.minutesCounter} : {this.state.secondsCounter}</Text>
+                                    <Button color="#6495ED" title="Flip" onPress={() => this.onFlipCard() }/>
+                                </View>
+                                <View style={{flex:1, alignItems:'stretch'}}>
+                                    <Button color="#4169E1" title="Delete card" onPress={() => this.deleteCard()}/>
+                                </View>
                             </View>
                         ) : (
-                            <View>
-                                <Text>{this.state.firstDeckCard.back}</Text>
-                                <Button title="Right" onPress={()=> this.addCardToCorrectCardsDeck()} />
-                                <Button title="Wrong" onPress={()=> this.addCardToIncorrectCardsDeck()} />
+                            <View style={{flex:1, justifyContent:'space-evenly'}}>
+                                <View style={{alignItems:'center', justifyContent:'center'}}>
+                                    <Text style={styles.cardTextStyle}>{this.state.firstDeckCard.back}</Text>
+                                </View>
+                                <View>
+                                    <Button title="Right" onPress={()=> this.addCardToCorrectCardsDeck()} />
+                                    <Button title="Wrong" onPress={()=> this.addCardToIncorrectCardsDeck()} />
+                                </View>
                             </View>                
                         )
                     ) : (
@@ -177,7 +192,9 @@ class CardsView extends Component {
                         </View> 
                     )}
                 </View>
-                <Button title="Choose another topic" onPress={() => this.state.stopAction()} />
+                <View style={{flex:1}}>
+                    <Button color="#483D8B" style={styles.editDeckBtn} title="Edit deck" onPress={()=>this.state.editDeckAction(true)}/>
+                </View>
             </View>
         )
     }
@@ -185,15 +202,38 @@ class CardsView extends Component {
 
 const styles = StyleSheet.create({
     cardView: {
-        backgroundColor: 'red',
+        flex:4,
+        backgroundColor: "#E6E6FA",
         alignItems: 'center',
         justifyContent: 'center',
-        height: "60%",
-        width:  350,
+        // width:  "100%",
     },
-    editDeckBtn: {
-
+    appTitleContainer: {
+        backgroundColor: "#F0F8FF",
+        padding: 5
+    },
+    appTitle: {
+        fontSize: 35,
+        color: "#FFFFFF",
+        fontWeight: "bold",
+        letterSpacing: 1,
+        textShadowOffset: { width: 4, height: 4 },
+        textShadowRadius: 5,
+        textShadowColor: "#1E90FF"
+    },
+    cardTextStyle: {
+        fontSize: 16,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+        textShadowColor: "#1E90FF"
+    },
+    timerTextStyle: {
+        fontSize: 12,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+        textShadowColor: "#1E90FF"
     }
+
 });
 
 export default CardsView

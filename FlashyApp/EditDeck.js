@@ -1,7 +1,10 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import React, {Component} from 'react'
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
+import Constants from 'expo-constants'
 
 import AddNewCardForm from './AddNewCardForm'
+import AppTitleView from './AppTitleView'
+import RenameDeckView from './RenameDeckForm'
 
 
 class EditDeck extends Component {
@@ -9,55 +12,64 @@ class EditDeck extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            renameDeckAction: this.props.renameDeckAction,
-            oldDeckName: this.props.oldDeckName,
-            newDeckName: '',
-            isValid: false,
-            deleteDeckAction: props.deleteDeckAction,
             deck: this.props.currentDeck,
-            editDeckAction: props.editDeckAction
+            renameDeckAction: this.props.renameDeckAction,
+            deleteDeckAction: props.deleteDeckAction,
+            editDeckAction: props.editDeckAction,
+            showAddCardForm: false,
+            showRenameDeckForm: false
         };
     }
 
-    checkDeckName = (deckName) => {
-        this.setState({newDeckName: deckName}, this.validateDeckName)
-    }
+    toggleAddingNewCardForm = (toggleOption) => {
+        this.setState({showAddCardForm: toggleOption})
+    } 
 
-    validateDeckName = () => {
-        const formValid = (+this.state.newDeckName !== '' 
-            && this.state.newDeckName.length > 0)
-        this.setState({isValid: formValid})  
-    }
-
-    submitNewName = () => {
-        this.state.renameDeckAction(this.state.newDeckName)
+    toggleDeckRenameForm = (toggleOption) => {
+        this.setState({showRenameDeckForm: toggleOption})
     }
 
     render(){
         return (
-            <View>
-                <Button title="Back" onPress={() => this.state.editDeckAction(false)} />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="enter new deck name"
-                    onChangeText={this.checkDeckName}
-                />
-                <Button 
-                    title="Rename deck" 
-                    onPress={this.submitNewName}
-                    disabled={!this.state.isValid}
-                />
-                <AddNewCardForm currentDeck={this.state.deck} />
-                <Button title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
+            <View style={{flex:1}}>
+                
+                    { this.state.showAddCardForm === true || this.state.showRenameDeckForm === true ? (
+                        <View>
+                            {this.state.showAddCardForm === true ? (
+                                <AddNewCardForm currentDeck={this.state.deck} toggleForm={this.toggleAddingNewCardForm} />
+                            ) : (
+                                <RenameDeckView renameDeckAction={this.state.renameDeckAction} toggleForm={this.toggleDeckRenameForm}/>
+                            )}
+                        </View>
+                        ) : (
+                            <View style={{flex:1}}>
+                                <View style={{flex:1}}>
+                                    <AppTitleView title={this.state.deck.name} />
+                                    <Button color="#87CEFA" title="Back to playing" onPress={() => this.state.editDeckAction(false)} />
+                                </View>
+                                <View style={{flex:1, justifyContent:'space-evenly'}}>
+                                    <Button title="Add card to deck" onPress={() => this.toggleAddingNewCardForm(true)} />
+                                    <Button title="Rename deck" onPress={() => this.toggleDeckRenameForm(true)} />
+                                    <Button color="#000080" title="Delete deck" onPress={() => this.state.deleteDeckAction(this.state.deck)} />
+                                </View>
+                            </View>
+                        )
+                    }   
+                
             </View>
         )
     }    
 }
 
 const styles = StyleSheet.create({
-    input: {
-        borderColor: 'black',
-        borderWidth: 1,
+    menuContainer: {
+        flex: 1,
+        padding:50
+    },
+    btnStyle: {
+        marginTop: 10,
+        padding: 50,
+        color: "red"
     }
 })
 

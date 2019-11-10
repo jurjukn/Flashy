@@ -33,30 +33,37 @@ class AddNewDeckForm extends Component {
 
     render(){
         return (
-            <View>
+            <View style={{flex:1}}>
                 <Button 
-                    title="Back" 
+                    title="Back to main menu" 
+                    color="#87CEFA"
                     onPress={()=>this.state.finishedAddingAction()}
                 />
-                <TextInput 
-                    style={styles.input}
-                    placeholder="enter deck name"
-                    onChangeText={this.checkDeckName}
-                    value={this.state.deckName}
-                />
-                <Button 
-                    title="Add deck" 
-                    onPress={()=>this.submitNewDeck()}
-                    disabled={!this.state.isValid}
-                />
+                <View style={{flex:1, justifyContent:'space-evenly'}}>
+                    <TextInput 
+                        style={styles.input}
+                        placeholder="enter deck name"
+                        onChangeText={this.checkDeckName}
+                        value={this.state.deckName}
+                    />
+                    <Button 
+                        title="Add deck" 
+                        onPress={()=>this.submitNewDeck()}
+                        disabled={!this.state.isValid}
+                    />
+                </View>
             </View>
         )
     }  
 }
 const styles = StyleSheet.create({
     input: {
-        borderColor: 'black',
+        borderColor: '#4682B4',
         borderWidth: 1,
+        backgroundColor: "#E6E6FA",
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+        textShadowColor: "#1E90FF"
     }
 })
 
